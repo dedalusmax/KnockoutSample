@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Knockout.js sample</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+
+    <script src="src/jquery-3.2.1.js"></script>
+    <script src="src/knockout-3.4.2.js"></script>
+    <script src="src/knockout.mapping-latest.js"></script>
+
+    <script data-main="src/config" src="src/require.js"></script>
+    <script>
+        require(['config'], function (config) {
+            require(['../app/root']);
+        });
+    </script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Knockout.js sample</a>
+            </div>
+            <div class="navbar-collapse collapse" data-bind="if: authenticated()">
+                <ul class="nav navbar-nav">
+                    <li data-bind="css: {active: selectedOption() == 'sessions'}">
+                        <a href="#" data-bind="click: function(data) { displayOption('sessions'); }">Sessions</a>
+                    </li>
+                    <li data-bind="css: {active: selectedOption() == 'speakers'}">
+                        <a href="#" data-bind="click: function(data) { displayOption('speakers'); }">Speakers</a>
+                    </li>
+                    <li data-bind="css: {active: selectedOption() == 'rooms'}">
+                        <a href="#" data-bind="click: function(data) { displayOption('rooms'); }">Rooms</a>
+                    </li>
+                    <li>
+                        <a href="#" data-bind="click: logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+
+        <div id="login" class="row" data-bind="if: !authenticated()">
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                <fieldset data-bind="with: login">
+                    <legend>
+                        Login
+                    </legend>
+                    <span data-bind="if: isInvalidLogin()" class="text-danger">Invalid username or password<br /><br /></span>
+                    <form data-bind="submit: doLogin">
+                        <div class="form-group">
+                            <label for="">Username</label>
+                            <input type="text" class="form-control" placeholder="Username" data-bind="value: username" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Password</label>
+                            <input type="password" class="form-control" placeholder="Password" data-bind="value: password" required="required" />
+                        </div>
+                        <button class="btn btn-primary" type="submit">Login</button>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="row" data-bind="if: authenticated()">
+
+            <div id="sessions" data-bind="if: selectedOption() == 'sessions'">
+                <fieldset>
+                    <legend>Sessions</legend>
+
+                    <table class="table table-bordered table-hover table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Session ID</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr data-bind="if: isLoading()">
+                                <td colspan="3" style="text-align: center;"><i class="fa fa-circle-o-notch fa-spin" style="font-size:24px;"></i></td>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: sessions">
+                            <tr>
+                                <td data-bind="text: ID"></td>
+                                <td data-bind="text: Title"></td>
+                                <td data-bind="text: Description"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+
+            <div id="speakers" data-bind="if: selectedOption() == 'speakers'">
+                <fieldset>
+                    <legend>Speakers</legend>
+
+                    <table class="table table-bordered table-hover table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Speaker ID</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                            </tr>
+                            <tr data-bind="if: isLoading()">
+                                <td colspan="3" style="text-align: center;"><i class="fa fa-circle-o-notch fa-spin" style="font-size:24px;"></i></td>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: speakers">
+                            <tr>
+                                <td data-bind="text: ID"></td>
+                                <td data-bind="text: Title"></td>
+                                <td data-bind="text: Type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+
+            <div id="rooms" data-bind="if: selectedOption() == 'rooms'">
+                <fieldset>
+                    <legend>Rooms</legend>
+
+                    <table class="table table-bordered table-hover table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Room ID</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr data-bind="if: isLoading()">
+                                <td colspan="3" style="text-align: center;"><i class="fa fa-circle-o-notch fa-spin" style="font-size:24px;"></i></td>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: rooms">
+                            <tr>
+                                <td data-bind="text: ID"></td>
+                                <td data-bind="text: Title"></td>
+                                <td data-bind="text: Description"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--<script>
+
+        'using strict';
+
+        var Module = (function (){
+            var self = this;
+
+            console.log(self);
+
+            return function () {
+                console.log(self);
+            }
+        });
+
+        //var someObj = new SomeObject();
+
+        console.dir(Module);
+
+    </script>-->
+</body>
+</html>
