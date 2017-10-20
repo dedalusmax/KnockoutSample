@@ -65,6 +65,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\uploader.js" />
+    <Content Include="app\uuid4.js" />
     <Content Include="packages.config" />
     <Content Include="src\config.js" />
     <Content Include="src\jquery-3.2.1.slim.min.map" />

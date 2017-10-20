@@ -1,4 +1,4 @@
-﻿define(["service", "login"], function (service, login) {
+﻿define(["service", "login", "uploader"], function (service, login, uploader) {
 
     return (function () {
         var self = this;
@@ -10,7 +10,9 @@
         self.login = ko.observable(login);
         self.authenticated = ko.observable(login.authenticated());
 
-        self.selectedOption = ko.observable('sessions');
+        self.uploader = ko.observable(uploader);
+
+        self.selectedOption = ko.observable('upload');
 
         self.logout = function () {
             self.authenticated(false);
@@ -52,7 +54,8 @@
             login: self.login,
             selectedOption: self.selectedOption,
             logout: self.logout,
-            displayOption: self.displayOption
+            displayOption: self.displayOption,
+            uploader: self.uploader
         }
     })();
 

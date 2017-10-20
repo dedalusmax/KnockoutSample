@@ -43,6 +43,17 @@
             return speakersData;
         }
 
+        self.postMessage = function (id, type, size, data) {
+            var d = {
+                ID: id,
+                Type: type,
+                Size: size,
+                Data: data
+            }
+
+            return postData('api/data', d);
+        }
+
         function getData(url) {
             return $.getJSON(apiUrl + url,
                 function (data) {
@@ -53,11 +64,33 @@
                 });
         }
 
+        function postData(url, data) {
+            var dataBuffer = JSON.stringify(data, function (k, v) {
+                if (v instanceof Uint8Array) {
+                    return Array.apply([], v);
+                }
+                return v;
+            });
+
+            return $.ajax({
+                type: 'POST',
+                data: dataBuffer,
+                url: apiUrl + url,
+                contentType: 'application/json',
+                success: function (data) { return true; },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('Request failed! ' + ko.toJSON(jqXHR) + ' Error: ' + ko.toJSON(errorThrown) + ' ' + ko.toJSON(textStatus));
+                    return false;
+                }
+            });
+        }
+
         return {
             doLogin: self.doLogin,
             getSessions: self.getSessions,
             getRooms: self.getRooms,
-            getSpeakers: self.getSpeakers
+            getSpeakers: self.getSpeakers,
+            postMessage: self.postMessage
         }
     })();
 

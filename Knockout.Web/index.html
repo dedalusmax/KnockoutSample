@@ -42,6 +42,9 @@
                     <li data-bind="css: {active: selectedOption() == 'rooms'}">
                         <a href="#" data-bind="click: function(data) { displayOption('rooms'); }">Rooms</a>
                     </li>
+                    <li data-bind="css: {active: selectedOption() == 'upload'}">
+                        <a href="#" data-bind="click: function(data) { displayOption('upload'); }">Upload</a>
+                    </li>
                     <li>
                         <a href="#" data-bind="click: logout">Logout</a>
                     </li>
@@ -155,28 +158,29 @@
                 </fieldset>
             </div>
 
+            <div id="uploader" data-bind="if: selectedOption() == 'upload'">
+                <fieldset data-bind="with: uploader">
+                    <legend>Upload file</legend>
+                    <div>
+                        <input type="file" id="fileToUpload" data-bind="fileUpload: file, event: { change: function() { uploadFile() } }, attr: {'disabled': isUpload()}" />
+                    </div>
+
+                    <div data-bind="visible: isUpload">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar"
+                                 aria-valuemin="0" aria-valuemax="100" style="" data-bind="style: {width: Number(percentage()) + '%'}">
+                                <span data-bind="text: percentageText()"></span>
+                            </div>
+                        </div>
+                        <span data-bind="text: remainingText()"></span>
+                    </div>
+                </fieldset>
+            </div>
+
         </div>
 
     </div>
 
-    <!--<script>
 
-        'using strict';
-
-        var Module = (function (){
-            var self = this;
-
-            console.log(self);
-
-            return function () {
-                console.log(self);
-            }
-        });
-
-        //var someObj = new SomeObject();
-
-        console.dir(Module);
-
-    </script>-->
 </body>
 </html>

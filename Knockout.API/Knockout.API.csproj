@@ -95,14 +95,17 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\SpeakersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\SpeakerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EnumMessageType.cs" />
     <Compile Include="Repository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

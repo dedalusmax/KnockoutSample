@@ -6,7 +6,7 @@
         self.username = ko.observable("user");
         self.password = ko.observable("pass");
         self.isInvalidLogin = ko.observable(false);
-        self.authenticated = ko.observable(false);
+        self.authenticated = ko.observable(true);
 
         self.doLogin = function (data) {
             self.isInvalidLogin(false);

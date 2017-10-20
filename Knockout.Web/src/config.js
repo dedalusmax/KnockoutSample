@@ -6,6 +6,8 @@
         rooms: 'rooms',
         speakers: 'speakers',
         login: 'login',
-        service: 'service'
+        service: 'service',
+        uploader: 'uploader',
+        uuid4: 'uuid4'
     }
 })
